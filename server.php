@@ -71,4 +71,5 @@ function getsalesbyid() {
 	echo json_encode($item);
 	
 }
+
 ?>
