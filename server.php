@@ -7,6 +7,12 @@ if (isset($_POST['action'])) {
 		case 'login':
 			login();
 			break;
+		case 'getitem':
+			getitem();
+			break;
+		case 'getsalesbyid':
+			getsalesbyid();
+			break;
 	    default:
 	    	echo 'unknown request';
 	}
@@ -35,5 +41,34 @@ function login() {
 		}
 	}
 	echo $check;
+}
+
+function getitem() {
+	if (isset($_POST['id'])) {
+		$itemid = $_POST['id'];
+	} else {
+		echo json_encode(array());
+		return;
+	}
+	
+	$link = mysql_connect("localhost", "root", "");
+	$result = mysql_db_query("scm", "select * from item where itemid=$itemid",$link);
+	$item = mysql_fetch_assoc($result);
+	echo json_encode($item);
+}
+
+function getsalesbyid() {
+	if (isset($_POST['id'])) {
+		$orderid = $_POST['id'];
+	} else {
+		echo json_encode(array());
+		return;
+	}
+	
+	$link = mysql_connect("localhost", "root", "");
+	$result = mysql_db_query("scm", "select * from sales where orderid=$orderid",$link);
+	$item = mysql_fetch_assoc($result);
+	echo json_encode($item);
+	
 }
 ?>
